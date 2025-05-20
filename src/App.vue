@@ -1,9 +1,16 @@
-<script setup lang="ts">
+<script setup>
+import Addtarea from './components/addtarea.vue';
+import ListaTareas from './components/Lista-tareas.vue';
+
 
 </script>
 
 <template>
- <h1>PRUEBA</h1>
+<Auth-user></Auth-user>
+<ListaTareas></ListaTareas>
+<addtarea></addtarea>
+<ListaTareas></ListaTareas>
+
 </template>
 
 <style scoped>
