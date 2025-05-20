@@ -3,7 +3,7 @@
 </script>
 
 <template>
- <h1>auth</h1>
+ <h1><strong>usuario</strong> </h1>
 </template>
 
 <style scoped>

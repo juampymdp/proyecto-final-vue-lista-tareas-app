@@ -1,18 +1,20 @@
 <script setup>
 import Addtarea from './components/addtarea.vue';
-import ListaTareas from './components/Lista-tareas.vue';
+import AutentificarUsuario from './components/autentificar-usuario.vue';
+import ItemTareas from './components/Item-tareas.vue';
+import ListaTareas from './components/lista-tareas.vue';
 
 
 </script>
 
 <template>
-<Auth-user></Auth-user>
-<ListaTareas></ListaTareas>
+<lista-tareas></lista-tareas>
 <addtarea></addtarea>
-<ListaTareas></ListaTareas>
-
+<item-tareas></item-tareas>
+<AutentificarUsuario></AutentificarUsuario>
 </template>
 
 <style scoped>
+
 
 </style>
