@@ -1,20 +1,31 @@
 <script setup>
-import Addtarea from './components/addtarea.vue';
-import AutentificarUsuario from './components/autentificar-usuario.vue';
-import ItemTareas from './components/Item-tareas.vue';
-import ListaTareas from './components/lista-tareas.vue';
-
-
+import AppHeader from './components/AppHeader.vue';
 </script>
 
 <template>
-<lista-tareas></lista-tareas>
-<addtarea></addtarea>
-<item-tareas></item-tareas>
-<AutentificarUsuario></AutentificarUsuario>
+
+<section>
+  <div class="app">
+    <AppHeader />
+    <router-view class="app-main" />
+  </div>
+</section>
+  
+
+
 </template>
 
 <style scoped>
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #eeeeee;
+}
 
+.app-main {
+  flex-grow: 1;
+  padding: 20px;
+}
 
 </style>
