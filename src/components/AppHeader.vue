@@ -10,12 +10,16 @@ function logout() {
 <template>
     <section>
   <header class="header">
-    <h1>To-Do App</h1>
+    <h1>. TASKER</h1>
     <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/auth">Login</router-link>
+      <router-link to="/">LISTA - home
+      </router-link>
+      <router-link to="/auth">Login
+        
+      </router-link>
     </nav>
     <button @click="logout">Cerrar sesión</button>
+
     </header> 
     </section>
 </template>

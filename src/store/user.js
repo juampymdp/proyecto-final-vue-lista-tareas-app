@@ -18,8 +18,11 @@ export const useUserStore = defineStore('user', {
     },
 
     // 🔵 Registro de usuario con confirmación de correo
-    async signUp(email, password) {
-      const { error } = await supabase.auth.signUp({ email, password });
+    async signUp(emailInput, passwordInput) {
+      const { data, error } = await supabase.auth.signUp({ 
+        email: emailInput, 
+        password: passwordInput 
+      });
 
       if (error) {
         if (error.message.includes("email not confirmed")) {
@@ -30,8 +33,8 @@ export const useUserStore = defineStore('user', {
         throw error;
       }
 
-      alert("Registro exitoso. Revisa tu correo y confirma tu cuenta antes de iniciar sesión.");
-    },
+      console.log(data);
+      },
 
     // 🔴 Inicio de sesión verificando confirmación de correo
     async signIn(email, password) {
