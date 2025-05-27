@@ -9,13 +9,11 @@ const password = ref('');
 function login() {
   userStore.signIn(email.value, password.value);
 }
-
-
 </script>
 
 <template>
  <section>
-    <div class="auth">
+  <div class="auth">
     <h2>Iniciar sesión</h2>
     <input v-model="email" type="email" placeholder="Correo electrónico" />
     <input v-model="password" type="password" placeholder="Contraseña" />
@@ -44,5 +42,4 @@ button {
   background: #6200ea;
   color: white;
 }
-
 </style>

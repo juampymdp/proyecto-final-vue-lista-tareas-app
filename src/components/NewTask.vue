@@ -11,12 +11,11 @@ function addTask() {
     task.value = '';
   }
 }
-
 </script>
 
 <template>
     <section> 
-          <div class="new-task">
+ <div class="new-task">
     <input v-model="task" type="text" placeholder="Escribe una nueva tarea..." />
     <button @click="addTask">Agregar</button>
   </div>

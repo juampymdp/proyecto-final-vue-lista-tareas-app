@@ -4,7 +4,7 @@
 
 <template>
     <section>
-  <nav class="nav">
+<nav class="nav">
     <router-link to="/">Inicio</router-link>
     <router-link to="/auth">Login</router-link>
   </nav>

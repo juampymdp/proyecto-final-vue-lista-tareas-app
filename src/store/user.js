@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', {
   }),
 
   actions: {
+    // 🟢 Obtener el usuario actual desde Supabase
     async fetchUser() {
       const { data: { user }, error } = await supabase.auth.getUser();
       if (error) {
@@ -16,6 +17,7 @@ export const useUserStore = defineStore('user', {
       this.user = user;
     },
 
+    // 🔵 Registro de usuario con confirmación de correo
     async signUp(email, password) {
       const { error } = await supabase.auth.signUp({ email, password });
 
@@ -31,6 +33,7 @@ export const useUserStore = defineStore('user', {
       alert("Registro exitoso. Revisa tu correo y confirma tu cuenta antes de iniciar sesión.");
     },
 
+    // 🔴 Inicio de sesión verificando confirmación de correo
     async signIn(email, password) {
       const { user, error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -46,6 +49,7 @@ export const useUserStore = defineStore('user', {
       this.user = user;
     },
 
+    // 🟠 Cierre de sesión y limpieza de estado
     async signOut() {
       const { error } = await supabase.auth.signOut();
       if (error) {

@@ -26,4 +26,3 @@ export const useTaskStore = defineStore('tasks', {
     }
   }
 });
-

@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from '../store/user';
@@ -24,8 +23,11 @@ function toggleAuthMode() {
   isSignUp.value = !isSignUp.value;
 }
 </script>
+
+
+
 <template>
-    <section>
+<section> 
   <div class="auth-container">
     <h2>{{ isSignUp ? 'Regístrate' : 'Inicia sesión' }}</h2>
     <form @submit.prevent="handleAuth">
@@ -39,9 +41,8 @@ function toggleAuthMode() {
       {{ isSignUp ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate' }}
     </p>
   </div>
-</section>
+  </section>
 </template>
-
 
 <style scoped>
 .auth-container {

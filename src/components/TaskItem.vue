@@ -15,11 +15,13 @@ function deleteTask() {
 </script>
 
 <template>
-<section> <div class="task">
+<section> 
+ <div class="task">
     <p :class="{ completed: task.completed }">{{ task.task }}</p>
     <button @click="toggleTask">{{ task.completed ? '☑️' : '⬜' }}</button>
     <button @click="deleteTask">❌</button>
-  </div></section>
+  </div>
+</section>
 </template>
 
 <style scoped>
@@ -35,5 +37,4 @@ function deleteTask() {
   text-decoration: line-through;
   color: gray;
 }
-
 </style>

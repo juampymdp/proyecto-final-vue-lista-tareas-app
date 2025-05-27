@@ -1,25 +1,22 @@
 <script setup>
-
 import { useUserStore } from '../store/user';
 
 const userStore = useUserStore();
 function logout() {
   userStore.signOut();
 }
-
 </script>
 
 <template>
     <section>
-         <header class="header">
+  <header class="header">
     <h1>To-Do App</h1>
     <nav>
       <router-link to="/">Home</router-link>
       <router-link to="/auth">Login</router-link>
     </nav>
     <button @click="logout">Cerrar sesión</button>
-  </header>
-   
+    </header> 
     </section>
 </template>
 
