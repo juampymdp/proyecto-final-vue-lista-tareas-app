@@ -26,6 +26,21 @@ const confirmDelete = (id) => {
     taskStore.deleteTask(id);
   }
 };
+import { onMounted } from "vue";
+
+onMounted(async () => {
+  await taskStore.fetchTasks();
+});
+
+const toggleTaskState = async (task) => {
+  await taskStore.toggleTask(!task.is_complete, task.id);
+};
+
+const deleteTask = async (id) => {
+  if (confirm("¿Seguro que querés eliminar esta tarea?")) {
+    await taskStore.deleteTask(id);
+  }
+};
 
 
 </script>
@@ -63,6 +78,25 @@ const confirmDelete = (id) => {
   </li>
   <button @click="confirmDelete(task.id)">🗑️</button>
 
+</ul>
+<ul class="task-list">
+  <li
+    v-for="task in taskStore.tasks"
+    :key="task.id"
+    :class="{ done: task.is_complete }"
+  >
+    <div class="task-content">
+      <h3>{{ task.title }}</h3>
+      <p>{{ task.description }}</p>
+    </div>
+
+    <div class="task-actions">
+      <button @click="toggleTaskState(task)">
+        {{ task.is_complete ? "Desmarcar" : "Completar" }}
+      </button>
+      <button @click="deleteTask(task.id)">Eliminar</button>
+    </div>
+  </li>
 </ul>
 
   </div>
@@ -120,5 +154,24 @@ th, td {
   text-decoration: line-through;
   color: gray;
 }
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+.task-list li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.task-actions button {
+  margin-right: 0.5rem;
+}
+
 
 </style>

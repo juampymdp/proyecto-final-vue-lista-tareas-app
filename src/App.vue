@@ -10,7 +10,6 @@ onMounted(async () => {
   await userStore.fetchUser();
 });
 
-
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Auth from '../pages/Auth.vue';
-import Dashboard from '../pages/Dashboard.vue';
+import Auth from '../components/SignIn.vue';
+import Dashboard from '../views/Dashboard.vue';
 
 const routes = [
   { path: '/', component: Dashboard },
@@ -23,6 +23,7 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 });
+
 async logout() {
   await supabase.auth.signOut();
   this.user = null;
