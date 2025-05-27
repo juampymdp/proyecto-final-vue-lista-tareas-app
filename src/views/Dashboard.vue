@@ -21,6 +21,13 @@ const handleAddTask = async () => {
   title.value = "";
   description.value = "";
 };
+const confirmDelete = (id) => {
+  if (confirm("¿Estás seguro de eliminar esta tarea?")) {
+    taskStore.deleteTask(id);
+  }
+};
+
+
 </script>
 
 
@@ -46,6 +53,18 @@ const handleAddTask = async () => {
     <p v-if="!userStore.user" class="warning">
       ⚠️ Debes iniciar sesión para agregar tareas.
     </p>
+
+    <ul>
+  <li v-for="task in taskStore.tasks" :key="task.id">
+    <span :class="{ done: task.is_complete }">{{ task.title }}</span>
+    <button @click="taskStore.toggleTask(!task.is_complete, task.id)">
+      {{ task.is_complete ? "Desmarcar" : "Completar" }}
+    </button>
+  </li>
+  <button @click="confirmDelete(task.id)">🗑️</button>
+
+</ul>
+
   </div>
 </section>
 </template>
@@ -96,6 +115,10 @@ th, td {
 .warning {
   color: red;
   margin-top: 1rem;
+}
+.done {
+  text-decoration: line-through;
+  color: gray;
 }
 
 </style>
