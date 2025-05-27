@@ -1,74 +1,51 @@
 <script setup>
-import { ref } from 'vue';
-import { useTaskStore } from '../store/task';
+import { ref, computed, onMounted } from "vue";
+import { useTaskStore } from "@/stores/task";
+import { useUserStore } from "@/stores/user";
 
 const taskStore = useTaskStore();
-const newTask = ref('');
+const userStore = useUserStore();
 
-// 🔄 Obtener todas las tareas al cargar la página
-taskStore.fetchTasks();
+const title = ref("");
+const description = ref("");
 
-// 🟢 Agregar nueva tarea
-async function addTask() {
-  if (newTask.value.trim() !== '') {
-    await taskStore.addTask(newTask.value);
-    newTask.value = ''; // Limpiar campo después de agregar
-  }
-}
+const canSubmit = computed(() => {
+  return title.value.trim() !== "" && description.value.trim() !== "" && userStore.user;
+});
 
-// ✅ Marcar tarea como completada o incompleta
-async function toggleTask(task) {
-  await taskStore.toggleTask(task.id, task.completed);
-}
+const handleAddTask = async () => {
+  if (!canSubmit.value) return;
 
-// ✏️ Editar tarea (por ahora solo muestra un alert)
-function editTask(task) {
-  const updatedTask = prompt("Edita tu tarea:", task.task);
-  if (updatedTask && updatedTask.trim() !== '') {
-    taskStore.updateTask(task.id, updatedTask);
-  }
-}
+  await taskStore.addTask(title.value, description.value);
 
-// ❌ Eliminar tarea
-async function deleteTask(taskId) {
-  await taskStore.deleteTask(taskId);
-}
+  title.value = "";
+  description.value = "";
+};
 </script>
 
 
 <template>
 <section>
   <div class="dashboard">
-    <h2>Mis Tareas</h2>
+    <form @submit.prevent="handleAddTask">
+      <input
+        type="text"
+        placeholder="Título"
+        v-model="title"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Descripción"
+        v-model="description"
+        required
+      />
+      <button type="submit" :disabled="!canSubmit">Agregar tarea</button>
+    </form>
 
-    <!-- 🟢 Campo para agregar nueva tarea -->
-    <div class="new-task">
-      <input v-model="newTask" type="text" placeholder="Escribe una nueva tarea..." />
-      <button @click="addTask">➕ Agregar</button>
-    </div>
-
-    <!-- 📋 Tabla de tareas -->
-    <table>
-      <thead>
-        <tr>
-          <th>Tarea</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="task in taskStore.tasks" :key="task.id">
-          <td :class="{ completed: task.completed }">{{ task.task }}</td>
-          <td>
-            <input type="checkbox" v-model="task.completed" @change="toggleTask(task)" />
-          </td>
-          <td>
-            <button @click="editTask(task)"><span class="icon">✏️</span></button>
-            <button @click="deleteTask(task.id)"><span class="icon">🗑️</span></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <p v-if="!userStore.user" class="warning">
+      ⚠️ Debes iniciar sesión para agregar tareas.
+    </p>
   </div>
 </section>
 </template>
@@ -116,4 +93,9 @@ th, td {
 .icon {
   font-size: 16px;
 }
+.warning {
+  color: red;
+  margin-top: 1rem;
+}
+
 </style>

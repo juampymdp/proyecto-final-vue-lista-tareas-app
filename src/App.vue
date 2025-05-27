@@ -1,5 +1,16 @@
 <script setup>
 import AppHeader from './components/AppHeader.vue';
+
+import { onMounted } from "vue";
+import { useUserStore } from "@/store/user";
+
+const userStore = useUserStore();
+
+onMounted(async () => {
+  await userStore.fetchUser();
+});
+
+
 </script>
 
 <template>
