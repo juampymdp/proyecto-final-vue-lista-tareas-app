@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useTaskStore } from "@/stores/task";
-import { useUserStore } from "@/stores/user";
+import { useTaskStore } from "./stores/task";
+import { useUserStore } from "./stores/user";
 
 const taskStore = useTaskStore();
 const userStore = useUserStore();

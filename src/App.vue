@@ -2,7 +2,8 @@
 import AppHeader from './components/AppHeader.vue';
 
 import { onMounted } from "vue";
-import { useUserStore } from "@/store/user";
+import { useUserStore } from './store/user';
+import { RouterView } from 'vue-router';
 
 const userStore = useUserStore();
 
