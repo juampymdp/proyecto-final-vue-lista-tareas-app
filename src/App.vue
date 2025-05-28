@@ -1,24 +1,27 @@
 <script setup>
-import AppHeader from './components/AppHeader.vue';
+// import AppHeader from './components/AppHeader.vue';
 
-import { onMounted } from "vue";
+
+
+import { onMounted } from 'vue';
 import { useUserStore } from './store/user';
 import { RouterView } from 'vue-router';
 
 const userStore = useUserStore();
 
-onMounted(async () => {
-  await userStore.fetchUser();
+onMounted(() => {
+  userStore.fetchUser();
 });
+
+
 
 </script>
 
 <template>
 <section>
-  <div class="app">
-    <AppHeader />
-    <router-view class="app-main" />
-  </div>
+
+  <RouterView />
+
 </section>
 </template>
 

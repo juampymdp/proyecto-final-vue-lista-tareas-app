@@ -1,4 +1,88 @@
+
 <script setup>
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '../store/user';
+import { useTaskStore } from '../store/task';
+import AddTask from '../components/AddTask.vue';
+
+const router = useRouter();
+const userStore = useUserStore();
+const taskStore = useTaskStore();
+
+const newTaskTitle = ref('');
+const newTaskDescription = ref('');
+const tasks = ref([]);
+
+const handleAddTask = async () => {
+  if (!newTaskTitle.value || !newTaskDescription.value) return;
+  await taskStore.addTask(newTaskTitle.value, newTaskDescription.value);
+  await loadTasks();
+  newTaskTitle.value = '';
+  newTaskDescription.value = '';
+};
+
+const loadTasks = async () => {
+  tasks.value = await taskStore.fetchTasks();
+};
+
+const toggleTask = async (task) => {
+  await taskStore.toggleTask(task.is_complete, task.id);
+};
+
+const deleteTask = async (id) => {
+  await taskStore.deleteTask(id);
+  await loadTasks();
+};
+
+const logout = async () => {
+  await userStore.logout();
+  router.push('/auth');
+};
+
+onMounted(() => {
+  loadTasks();
+});
+</script>
+
+<template>
+<section>
+   <div>
+   
+    <h1>Bienvenido a tu lista de tareas</h1>
+    <button @click="logout">Cerrar sesión</button>
+
+    <form @submit.prevent="handleAddTask">
+      <input v-model="newTaskTitle" placeholder="Título" required />
+      <input v-model="newTaskDescription" placeholder="Descripción" required />
+      <button type="submit">Agregar tarea</button>
+    </form>
+
+    <ul v-if="tasks?.length">
+      <li v-for="task in tasks" :key="task.id">
+        <label>
+          <input type="checkbox" v-model="task.is_complete" @change="toggleTask(task)" />
+          {{ task.title }} - {{ task.description }}
+        </label>
+        <button @click="deleteTask(task.id)">Eliminar</button>
+      </li>
+    </ul>
+    <p v-else>No hay tareas.</p>
+  </div>
+    <main class="max-w-xl mx-auto mt-10">
+    <AddTask />
+    <!-- Aquí más adelante iría <TaskList /> -->
+  </main>
+  
+  </section>
+</template>
+
+
+
+
+
+
+<!-- <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useTaskStore } from "./stores/task";
 import { useUserStore } from "./stores/user";
@@ -174,4 +258,4 @@ th, td {
 }
 
 
-</style>
+</style> -->
