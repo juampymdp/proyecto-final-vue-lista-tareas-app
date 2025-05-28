@@ -1,26 +1,32 @@
+// router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
+import Dashboard from '../views/Dashboard.vue';
+import AuthLayout from '../components/AuthLayout.vue';
 import SignIn from '../components/SignIn.vue';
 import SignUp from '../components/SignUp.vue';
-import Dashboard from '../views/Dashboard.vue';
-import { useUserStore } from '../store/user';
 
 const routes = [
   {
     path: '/',
-    redirect: '/dashboard',
-  },
-  {
-    path: '/signin',
-    component: SignIn,
-  },
-  {
-    path: '/signup',
-    component: SignUp,
-  },
-  {
-    path: '/dashboard',
+    name: 'Dashboard',
     component: Dashboard,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/auth',
+    component: AuthLayout,
+    children: [
+      {
+        path: '',
+        name: 'SignIn',
+        component: SignIn,
+      },
+      {
+        path: 'signup',
+        name: 'SignUp',
+        component: SignUp,
+      },
+    ],
   },
 ];
 
@@ -29,28 +35,14 @@ const router = createRouter({
   routes,
 });
 
-// ⛔ Protección de rutas
-router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
-
-  if (to.meta.requiresAuth && !userStore.user) {
-    next('/signin');
+// Protección de rutas que requieren autenticación
+router.beforeEach(async (to, from, next) => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (to.meta.requiresAuth && !session) {
+    next('/auth');
   } else {
     next();
   }
 });
-
-router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
-
-  if (to.meta.requiresAuth && !userStore.user) {
-    // Almacenar la ruta original
-    userStore.returnUrl = to.fullPath;
-    next('/signin');
-  } else {
-    next();
-  }
-});
-
 
 export default router;
