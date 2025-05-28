@@ -14,6 +14,7 @@ export const useTaskStore = defineStore("tasks", {
         .from("tasks")
         .select("*")
         .eq("user_id", userStore.user.id)
+        .order("completed", { ascending: true })
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -39,6 +40,17 @@ export const useTaskStore = defineStore("tasks", {
       if (error) throw error;
       await this.fetchTasks();
     },
+
+    async editTaskInPlace(task) {
+      task.editedTitle = task.task
+      task.isEditing = !task.isEditing
+    },
+
+    async saveTaskInPlace(task) {
+      this.editTask(task.id, task.editedTitle)
+      task.isEditing = !task.isEditin
+    },
+
 
     async toggleComplete(task) {
       const { error } = await supabase

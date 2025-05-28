@@ -1,8 +1,16 @@
-<!-- 
+
 <script setup>
+import { useUserStore } from "../store/user";
+import { useRouter } from 'vue-router';
 defineProps(['userEmail']);
+const router = useRouter();
+const userStore = useUserStore();
 const emit = defineEmits(['logout']);
-const logout = () => emit('logout');
+const logout = async () => {
+  await userStore.logout()
+  router.push("/signin");
+};
+
 </script>
 
 <template>
@@ -12,12 +20,15 @@ const logout = () => emit('logout');
       <h1>¡HOLA!</h1>
       <p>{{ userEmail }}</p>
     </div>
-    <button @click="logout">Cerrar sesión</button>
+    <button @click="logout()">Cerrar sesión</button>
   </header>
   </section>
 </template>
 
- -->
+
+
+
+<!-- 
 <script setup>
 import { useUserStore } from '../store/user';
 import { useRouter } from 'vue-router';
@@ -66,4 +77,4 @@ const logout = async () => {
 .logout-btn:hover {
   background-color: #e0e0e0;
 }
-</style>
+</style> -->

@@ -3,6 +3,13 @@
 import { ref, onMounted } from "vue";
 import { useTaskStore } from '../store/task';
 import { storeToRefs } from "pinia";
+import { useUserStore } from "../store/user";
+import { useRouter } from 'vue-router';
+import { supabase } from '../supabase'
+import AppHeader from "../components/AppHeader.vue";
+
+const userStore = useUserStore();
+const router = useRouter();
 
 const taskStore = useTaskStore();
 const { tasks } = storeToRefs(taskStore);
@@ -23,28 +30,38 @@ const deleteTask = async (id) => {
   await taskStore.deleteTask(id);
 };
 
+const editTask = async (task) => {
+  await taskStore.editTaskInPlace(task);
+};
+
+const saveTask = async (task) => {
+  await taskStore.saveTaskInPlace(task);
+};
+
 onMounted(() => {
   taskStore.fetchTasks();
 });
 
 onMounted(async () => {
-  await userStore.fetchUser();
-  if (!userStore.user) {
+  if (await supabase.auth.getUser() == null) {
+    
     router.push("/signin");
     return;
   }
 
   await taskStore.fetchTasks();
+  
 });
-
+console.log("Usuario logueado:", userStore.user);
 </script>
 <template>
   <section>
+    <AppHeader></AppHeader>
   <div class="dashboard-container bg-light min-vh-100 py-5">
     <!-- Encabezado -->
     <header class="text-center mb-5">
-      <img src="./assets/logo.png" alt="Logo" class="logo mb-3" />
-      <h1 class="dashboard-title">Tus Tareas</h1>
+      <img src="../assets/logo.png" alt="Logo" class="logo mb-3" />
+      <h1 class="dashboard-title">Lista de Tareas</h1>
     </header>
 
     <!-- Agregar tarea -->
@@ -69,21 +86,47 @@ onMounted(async () => {
           :key="task.id"
           class="list-group-item d-flex justify-content-between align-items-center"
         >
-          <div>
-            <input
-              type="checkbox"
-              class="form-check-input me-2"
-              :checked="task.completed"
-              @change="toggleTask(task)"
-            />
-            <span :class="{ 'text-decoration-line-through': task.completed }">
-              {{ task.task }}
-            </span>
+          <div v-if="!task.isEditing" class="d-flex justify-content-between align-items-center w-100">
+            <div class="itemizq d-flex align-items-center">
+              <input
+                type="checkbox"
+                class="form-check-input me-2"
+                :checked="task.completed"
+                @change="toggleTask(task)"
+              />
+              <span :class="{ 'text-decoration-line-through': task.completed }">
+                {{ task.task }}
+              </span>
+            </div> 
+
+            <div class="itemder">
+              <button class="btn btn-sm btn-outline-primary me-2" @click="editTask(task)">
+                Editar
+              </button> 
+              <button class="btn btn-sm btn-danger" @click="deleteTask(task.id)">
+                Eliminar
+              </button>
+            </div>
           </div>
-          <div>
-            <button class="btn btn-sm btn-danger" @click="deleteTask(task.id)">
-              Eliminar
-            </button>
+          <div v-else class="d-flex justify-content-between align-items-center w-100">
+            <div class="itemizq d-flex align-items-center">
+              <input
+                type="checkbox"
+                class="form-check-input me-2"
+                :checked="task.completed"
+                @change="toggleTask(task)"
+              />
+              <input v-model="task.editedTitle" @keyup.enter="editTask" />
+            </div> 
+
+            <div class="itemder">
+              <button class="btn btn-sm btn-outline-primary me-2" @click="saveTask(task)">
+                Guardar
+              </button> 
+              <button class="btn btn-sm btn-danger" @click="editTask(task)">
+                Cancelar
+              </button>
+            </div>
           </div>
         </li>
       </ul>
@@ -105,6 +148,16 @@ onMounted(async () => {
   font-weight: bold;
   font-size: 30px;
 }
+.itemizq {
+  flex: 1;
+}
+
+.itemder {
+  display: flex;
+  gap: 0.5rem;
+}
+
+
 </style>
 
 

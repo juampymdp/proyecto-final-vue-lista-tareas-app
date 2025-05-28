@@ -45,7 +45,7 @@ const deleteTask = async () => {
   <li class="task-item">
     <input type="checkbox" :checked="task.completed" @change="toggleComplete" />
 
-    <div class="content" v-if="!isEditing">
+    <div class="content" v-if="0">
       <span :class="{ done: task.completed }">{{ task.task }}</span>
       <button @click="startEditing">Editar</button>
       <button @click="deleteTask">Eliminar</button>

@@ -1,15 +1,16 @@
-
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { supabase } from '../supabase'
+import { useUserStore } from "../store/user";
 
 const email = ref("");
 const password = ref("");
 const router = useRouter();
+const userStore = useUserStore();
 
 const handleSignUp = async () => {
-  const { error } = await supabase.auth.signUp({
+  const { data: { session }, error } = await supabase.auth.signUp({
     email: email.value,
     password: password.value,
   });
@@ -17,10 +18,12 @@ const handleSignUp = async () => {
   if (error) {
     alert("Error: " + error.message);
   } else {
-    router.push("/dashboard");
+    userStore.setUser(session?.user ?? null);
+    router.push("/");
   }
 };
 </script>
+
 
 <template>
   <section>
