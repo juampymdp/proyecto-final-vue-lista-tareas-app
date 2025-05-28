@@ -7,7 +7,7 @@ import { useUserStore } from './store/user';
 const router = useRouter();
 const userStore = useUserStore();
 
-// Verifica el usuario actual al iniciar la app
+
 onMounted(async () => {
   const { data, error } = await supabase.auth.getUser();
   if (data?.user) {
