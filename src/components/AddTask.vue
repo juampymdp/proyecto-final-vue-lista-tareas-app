@@ -15,6 +15,8 @@ const handleAdd = async () => {
     console.error('Error al agregar tarea:', error.message);
   }
 };
+
+console.log(userStore.user)
 </script>
 
 <template>

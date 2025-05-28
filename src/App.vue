@@ -7,12 +7,11 @@ import { useUserStore } from './store/user';
 const router = useRouter();
 const userStore = useUserStore();
 
-
 onMounted(async () => {
-  const { data, error } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
   if (data?.user) {
     userStore.setUser(data.user);
-    router.push('/dashboard');
+    router.push('/');
   } else {
     router.push('/signin');
   }

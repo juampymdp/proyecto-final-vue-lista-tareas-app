@@ -1,9 +1,12 @@
-// router/index.js
+
 import { createRouter, createWebHistory } from 'vue-router';
 import Dashboard from '../views/Dashboard.vue';
 import AuthLayout from '../components/AuthLayout.vue';
 import SignIn from '../components/SignIn.vue';
 import SignUp from '../components/SignUp.vue';
+import { supabase } from '../supabase'
+
+
 
 const routes = [
   {
@@ -20,15 +23,28 @@ const routes = [
         path: '',
         name: 'SignIn',
         component: SignIn,
+        alias: '/signin', // 👉 Alias para que /signin funcione
       },
       {
-        path: 'signup',
+        path: '',
         name: 'SignUp',
         component: SignUp,
+        alias: '/signup', // 👉 Alias para que /signup funcione
       },
     ],
   },
 ];
+
+
+
+
+
+
+
+
+
+
+
 
 const router = createRouter({
   history: createWebHistory(),

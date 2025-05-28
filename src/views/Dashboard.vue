@@ -26,6 +26,17 @@ const deleteTask = async (id) => {
 onMounted(() => {
   taskStore.fetchTasks();
 });
+
+onMounted(async () => {
+  await userStore.fetchUser();
+  if (!userStore.user) {
+    router.push("/signin");
+    return;
+  }
+
+  await taskStore.fetchTasks();
+});
+
 </script>
 <template>
   <section>
