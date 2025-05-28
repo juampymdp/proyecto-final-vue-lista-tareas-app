@@ -1,84 +1,47 @@
-
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useTaskStore } from '@/store/task'
+import { onMounted } from 'vue';
+import { useTaskStore } from '../store/task';
+import TaskItem from './TaskItem.vue';
 
-const taskStore = useTaskStore()
-const tasks = ref([])
-const newTask = ref('')
+const taskStore = useTaskStore();
 
 onMounted(async () => {
-  await taskStore.fetchTasks()
-  tasks.value = taskStore.tasks
-})
-
-const handleAddTask = async () => {
-  if (!newTask.value.trim()) return
-  await taskStore.addTask(newTask.value.trim())
-  newTask.value = ''
-  tasks.value = taskStore.tasks
-}
-
-const toggleComplete = async (task) => {
-  await taskStore.toggleComplete(task)
-  tasks.value = taskStore.tasks
-}
-
-const deleteTask = async (id) => {
-  await taskStore.deleteTask(id)
-  tasks.value = taskStore.tasks
-}
+  try {
+    await taskStore.fetchTasks();
+  } catch (error) {
+    console.error('Error al cargar tareas:', error.message);
+  }
+});
 </script>
 
-
 <template>
-    <section>
+  <section>
   <div class="task-list">
-    <form @submit.prevent="handleAddTask" class="add-task-form">
-      <input v-model="newTask" type="text" placeholder="Nueva tarea..." />
-      <button type="submit">Agregar</button>
-    </form>
+    <p v-if="taskStore.tasks.length === 0" class="empty">No hay tareas aún.</p>
 
-    <ul v-if="tasks.length">
-      <li v-for="task in tasks" :key="task.id" class="task-item">
-        <label>
-          <input
-            type="checkbox"
-            :checked="task.completed"
-            @change="toggleComplete(task)"
-          />
-          <span :class="{ completed: task.completed }">{{ task.task }}</span>
-        </label>
-        <button @click="deleteTask(task.id)">🗑️</button>
-      </li>
+    <ul v-else class="task-items">
+      <TaskItem
+        v-for="task in taskStore.tasks"
+        :key="task.id"
+        :task="task"
+      />
     </ul>
-
-    <p v-else>No hay tareas aún.</p>
   </div>
   </section>
 </template>
 
 <style scoped>
 .task-list {
-  max-width: 500px;
-  margin: 0 auto;
+  padding: 1rem;
 }
-
-.add-task-form {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+.empty {
+  color: #666;
+  font-style: italic;
+  text-align: center;
 }
-
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.completed {
-  text-decoration: line-through;
-  color: gray;
+.task-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 </style>

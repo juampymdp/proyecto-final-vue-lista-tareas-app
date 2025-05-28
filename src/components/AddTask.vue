@@ -5,8 +5,9 @@ import { useTaskStore } from '../store/task';
 const newTask = ref('');
 const taskStore = useTaskStore();
 
-const handleAddTask = async () => {
+const handleAdd = async () => {
   if (!newTask.value.trim()) return;
+
   try {
     await taskStore.addTask(newTask.value);
     newTask.value = '';
@@ -17,23 +18,39 @@ const handleAddTask = async () => {
 </script>
 
 <template>
-  <section>
-  <form @submit.prevent="handleAddTask" class="flex gap-2 mt-4">
+  <form @submit.prevent="handleAdd" class="add-task-form">
     <input
       v-model="newTask"
       type="text"
-      placeholder="Agregar una tarea..."
-      class="border border-gray-300 rounded px-4 py-2 w-full"
-      required
+      placeholder="Nueva tarea..."
+      class="task-input"
     />
-    <button
-      type="submit"
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-    >
-      Agregar
-    </button>
+    <button type="submit" class="add-button">Agregar</button>
   </form>
-  </section>
 </template>
 
-
+<style scoped>
+.add-task-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.task-input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.add-button {
+  background-color: #2c7be5;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.add-button:hover {
+  background-color: #1a5ed9;
+}
+</style>

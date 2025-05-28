@@ -1,41 +1,33 @@
 <script setup>
-// import AppHeader from './components/AppHeader.vue';
-
-
-
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { supabase } from './supabase';
 import { useUserStore } from './store/user';
-import { RouterView } from 'vue-router';
 
+const router = useRouter();
 const userStore = useUserStore();
 
-onMounted(() => {
-  userStore.fetchUser();
+// Verifica el usuario actual al iniciar la app
+onMounted(async () => {
+  const { data, error } = await supabase.auth.getUser();
+  if (data?.user) {
+    userStore.setUser(data.user);
+    router.push('/dashboard');
+  } else {
+    router.push('/signin');
+  }
 });
-
-
-
 </script>
 
 <template>
-<section>
-
-  <RouterView />
-
-</section>
+  <router-view />
 </template>
 
 <style scoped>
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #eeeeee;
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
 }
-
-.app-main {
-  flex-grow: 1;
-  padding: 20px;
-}
-
 </style>

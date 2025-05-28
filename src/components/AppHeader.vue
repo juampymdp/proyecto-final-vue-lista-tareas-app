@@ -1,43 +1,69 @@
+<!-- 
 <script setup>
-import { useUserStore } from '../store/user';
-
-const userStore = useUserStore();
-function logout() {
-  userStore.signOut();
-}
+defineProps(['userEmail']);
+const emit = defineEmits(['logout']);
+const logout = () => emit('logout');
 </script>
 
 <template>
-    <section>
-  <header class="header">
-    <h1>. TASKER</h1>
-    <nav>
-      <router-link to="/">LISTA - home
-      </router-link>
-      <router-link to="/auth">Login
-        
-      </router-link>
-    </nav>
+  <section>
+  <header class="app-header">
+    <div>
+      <h1>¡HOLA!</h1>
+      <p>{{ userEmail }}</p>
+    </div>
     <button @click="logout">Cerrar sesión</button>
+  </header>
+  </section>
+</template>
 
-    </header> 
-    </section>
+ -->
+<script setup>
+import { useUserStore } from '../store/user';
+import { useRouter } from 'vue-router';
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const logout = async () => {
+  await userStore.logout();
+  router.push('/signin');
+};
+</script>
+
+<template>
+  <header class="app-header">
+    <h1 class="logo">Mis Tareas</h1>
+    <button @click="logout" class="logout-btn">Cerrar sesión</button>
+  </header>
 </template>
 
 <style scoped>
-.header {
+.app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #6200ea;
+  padding: 1.5rem 1rem;
+  background-color: #3f51b5;
   color: white;
-  padding: 1rem;
 }
 
-nav a {
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
+.logout-btn {
+  background-color: white;
+  color: #3f51b5;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background-color: #e0e0e0;
+}
 </style>
