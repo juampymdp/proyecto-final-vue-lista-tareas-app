@@ -29,10 +29,10 @@ const handleSignUp = async () => {
   <section>
     
   <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light position-relative">
-    <!-- Logo -->
+  
     <img src="/src/assets/logo.png"alt="Logo" class="logo" />
 
-    <!-- Formulario de registro -->
+    
     <div class="form-container text-center">
       <h2 class="form-title mb-4">Regístrate</h2>
 

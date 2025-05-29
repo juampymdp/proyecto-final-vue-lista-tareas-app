@@ -58,13 +58,12 @@ console.log("Usuario logueado:", userStore.user);
   <section>
     <AppHeader></AppHeader>
     <div class="dashboard-container fondo-dashboard min-vh-100 py-5">
-    <!-- Encabezado -->
+   
     <header class="text-center mb-5">
       <img src="../assets/logo.png" alt="Logo" class="logo mb-3" />
       <h1 class="dashboard-title">Lista de Tareas</h1>
     </header>
 
-    <!-- Agregar tarea -->
     <div class="container mb-4">
       <form @submit.prevent="handleAddTask" class="d-flex justify-content-center">
         <input

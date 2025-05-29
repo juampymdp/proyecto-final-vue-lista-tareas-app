@@ -23,13 +23,13 @@ const routes = [
         path: '',
         name: 'SignIn',
         component: SignIn,
-        alias: '/signin', // 👉 Alias para que /signin funcione
+        alias: '/signin', 
       },
       {
         path: '',
         name: 'SignUp',
         component: SignUp,
-        alias: '/signup', // 👉 Alias para que /signup funcione
+        alias: '/signup', 
       },
     ],
   },
@@ -51,7 +51,6 @@ const router = createRouter({
   routes,
 });
 
-// Protección de rutas que requieren autenticación
 router.beforeEach(async (to, from, next) => {
   const { data: { session } } = await supabase.auth.getSession();
   if (to.meta.requiresAuth && !session) {
