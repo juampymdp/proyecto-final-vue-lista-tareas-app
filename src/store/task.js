@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { supabase } from "../supabase";
-import { useUserStore } from "./user";
 
 export const useTaskStore = defineStore("tasks", {
   state: () => ({
@@ -9,11 +8,11 @@ export const useTaskStore = defineStore("tasks", {
 
   actions: {
     async fetchTasks() {
-      const userStore = useUserStore();
+      const { data: { user } } = await supabase.auth.getUser()
       const { data, error } = await supabase
         .from("tasks")
         .select("*")
-        .eq("user_id", userStore.user.id)
+        .eq("user_id", user.id)
         .order("completed", { ascending: true })
         .order("created_at", { ascending: false });
 
@@ -22,12 +21,12 @@ export const useTaskStore = defineStore("tasks", {
     },
 
     async addTask(taskText) {
-      const userStore = useUserStore();
+      const { data: { user } } = await supabase.auth.getUser()
       const { error } = await supabase.from("tasks").insert([
         {
           task: taskText,
           completed: false,
-          user_id: userStore.user.id,
+          user_id: user.id,
         },
       ]);
 

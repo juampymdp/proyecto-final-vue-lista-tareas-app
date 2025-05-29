@@ -16,7 +16,6 @@ const handleAdd = async () => {
   }
 };
 
-console.log(userStore.user)
 </script>
 
 <template>

@@ -17,7 +17,7 @@ const handleSignIn = async () => {
   if (error) {
     alert("Error: " + error.message);
   } else {
-    router.push("/dashboard");
+    router.push("/");
   }
 };
 </script>
