@@ -23,11 +23,12 @@ const handleSignIn = async () => {
 </script>
 <template>
   <section>
-  <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light position-relative">
-    <!-- Logo -->
+<div class="fondo-personalizado d-flex flex-column align-items-center justify-content-center min-vh-100 position-relative">
+
+
     <img src="/src/assets/logo.png" alt="Logo" class="logo" />
 
-    <!-- Formulario de inicio de sesión -->
+
     <div class="form-container text-center">
       <h2 class="form-title mb-4">Inicia sesión</h2>
 
@@ -66,6 +67,11 @@ const handleSignIn = async () => {
 
 
 <style scoped>
+
+.fondo-personalizado {
+  background-color: #311a94;
+}
+
 .logo {
   width: 320px;
   height: 82px;
@@ -85,6 +91,7 @@ const handleSignIn = async () => {
   font-family: "Roboto", sans-serif;
   font-size: 35px;
   font-weight: bold;
+  color: #fc6253;
 }
 
 .register-btn {

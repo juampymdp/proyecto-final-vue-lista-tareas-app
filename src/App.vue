@@ -19,7 +19,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <router-view />
+  <section class='backgr'>
+      <router-view />
+  </section>
+
 </template>
 
 <style scoped>
@@ -28,5 +31,12 @@ body {
   background-color: #f7f7f7;
   margin: 0;
   padding: 0;
+}
+.backrg {
+  background-color: #311a94;
+}
+@media screen {
+  min-height: 600px;
+  
 }
 </style>

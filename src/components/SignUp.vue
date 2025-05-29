@@ -27,6 +27,7 @@ const handleSignUp = async () => {
 
 <template>
   <section>
+    
   <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light position-relative">
     <!-- Logo -->
     <img src="/src/assets/logo.png"alt="Logo" class="logo" />
@@ -65,6 +66,9 @@ const handleSignUp = async () => {
       </p>
     </div>
   </div>
+  <div>
+    
+  </div>
   </section>
 </template>
 
@@ -89,6 +93,7 @@ const handleSignUp = async () => {
   font-family: "Roboto", sans-serif;
   font-size: 35px;
   font-weight: bold;
+  color:#fc6253;
 }
 
 .register-btn {

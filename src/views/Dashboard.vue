@@ -57,7 +57,7 @@ console.log("Usuario logueado:", userStore.user);
 <template>
   <section>
     <AppHeader></AppHeader>
-  <div class="dashboard-container bg-light min-vh-100 py-5">
+    <div class="dashboard-container fondo-dashboard min-vh-100 py-5">
     <!-- Encabezado -->
     <header class="text-center mb-5">
       <img src="../assets/logo.png" alt="Logo" class="logo mb-3" />
@@ -78,7 +78,7 @@ console.log("Usuario logueado:", userStore.user);
       </form>
     </div>
 
-    <!-- Lista de tareas -->
+   
     <div class="container">
       <ul class="list-group">
         <li
@@ -156,54 +156,13 @@ console.log("Usuario logueado:", userStore.user);
   display: flex;
   gap: 0.5rem;
 }
-
-
-</style>
-
-
-
-
-<!-- <script setup>
-import { onMounted } from 'vue';
-import { useTaskStore } from '../store/task';
-import { useUserStore } from '../store/user';
-import { useRouter } from 'vue-router';
-import AppHeader from '../components/AppHeader.vue';
-import AddTask from '../components/AddTask.vue';
-import TaskList from '../components/TaskList.vue';
-
-const taskStore = useTaskStore();
-const userStore = useUserStore();
-const router = useRouter();
-
-onMounted(async () => {
-  // Si no hay usuario, redirige a login
-  if (!userStore.user) {
-    router.push('/signin');
-    return;
-  }
-
-  // Carga las tareas del usuario
-  await taskStore.fetchTasks();
-});
-</script>
-
-<template>
-  <section>
-  <div class="dashboard">
-    <AppHeader />
-    <main class="container">
-      <AddTask />
-      <TaskList />
-    </main>
-  </div>
-  </section>
-</template>
-
-<style scoped>
-.container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+.fondo-dashboard {
+  background-color: #311a94;
+  color: white; /* Opcional: texto blanco para buen contraste */
 }
-</style> -->
+
+@media screen {
+  min-width: 600px;
+  
+}
+</style>

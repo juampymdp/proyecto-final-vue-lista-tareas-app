@@ -17,64 +17,54 @@ const logout = async () => {
   <section>
   <header class="app-header">
     <div>
-      <h1>¡HOLA!</h1>
-      <p>{{ userEmail }}</p>
+       <img src="../assets/logo-header.png" alt="Logo" class="logo" />
+      <!-- <h1>¡HOLA!</h1>
+      <p>{{ userEmail }}</p> -->
     </div>
-    <button @click="logout()">Cerrar sesión</button>
+    <button class="logout-btn" @click="logout()">Cerrar sesión</button>
   </header>
   </section>
 </template>
 
-
-
-
-<!-- 
-<script setup>
-import { useUserStore } from '../store/user';
-import { useRouter } from 'vue-router';
-
-const userStore = useUserStore();
-const router = useRouter();
-
-const logout = async () => {
-  await userStore.logout();
-  router.push('/signin');
-};
-</script>
-
-<template>
-  <header class="app-header">
-    <h1 class="logo">Mis Tareas</h1>
-    <button @click="logout" class="logout-btn">Cerrar sesión</button>
-  </header>
-</template>
-
 <style scoped>
 .app-header {
+  width: 100%;
+  height: 70px;
+  background-color: #fff3d5;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 1rem;
-  background-color: #3f51b5;
-  color: white;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  width: 150px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .logout-btn {
-  background-color: white;
-  color: #3f51b5;
+  background-color: #8b7cf2;
+  color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 10px 20px;
+  border-radius: 15px;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .logout-btn:hover {
-  background-color: #e0e0e0;
+  background-color: #7564e2;
+  transform: scale(1.05);
 }
-</style> -->
+
+.logout-btn:active {
+  background-color: #5e50c4;
+  transform: scale(0.98);
+}
+</style>
+
+
+
